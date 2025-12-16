@@ -45,30 +45,24 @@ cat > "$ECOSYSTEM_FILE" << 'EOF'
 module.exports = {
   apps: [
     {
-      name: 'app-frontend',
-      script: './dist/main.js', // or your frontend entry point
-      cwd: '/home/ubuntu/frontend',
+      name: 'dashboard',
+      cwd: '/home/ubuntu/dashboard',
+      script: 'pnpm',
+      args: 'start',
       instances: 1,
       autorestart: true,
       watch: false,
       max_memory_restart: '1G',
-      env: {
-        NODE_ENV: 'production',
-        PORT: 3000,
-      },
     },
     {
-      name: 'app-backend',
-      script: './dist/main.js', // or your backend entry point
-      cwd: '/home/ubuntu/backend',
+      name: 'api',
+      cwd: '/home/ubuntu/api',
+      script: 'pnpm',
+      args: 'start',
       instances: 1,
       autorestart: true,
       watch: false,
       max_memory_restart: '1G',
-      env: {
-        NODE_ENV: 'production',
-        PORT: 5001,
-      },
     },
   ],
 };
