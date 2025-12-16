@@ -2,6 +2,41 @@
 
 set -e
 
+# Detect if running via curl | bash (stdin)
+if [ ! -t 0 ] && [ -z "${BASH_SOURCE[0]}" -o "${BASH_SOURCE[0]}" = "bash" ]; then
+    echo "Detected piped execution. Downloading setup files..."
+    
+    # Create temporary directory
+    TEMP_DIR=$(mktemp -d)
+    cd "$TEMP_DIR"
+    
+    # Download the entire setup directory
+    REPO_URL="https://github.com/Ahmadh26/ec2-bootstrap"
+    BRANCH="main"
+    
+    echo "Downloading from $REPO_URL..."
+    
+    # Try git clone first (faster), fallback to wget
+    if command -v git &> /dev/null; then
+        git clone --depth 1 --branch "$BRANCH" "$REPO_URL.git" . 2>/dev/null || {
+            echo "Git clone failed, trying wget..."
+            wget -q "$REPO_URL/archive/refs/heads/$BRANCH.tar.gz" -O repo.tar.gz
+            tar -xzf repo.tar.gz --strip-components=1
+            rm repo.tar.gz
+        }
+    else
+        wget -q "$REPO_URL/archive/refs/heads/$BRANCH.tar.gz" -O repo.tar.gz
+        tar -xzf repo.tar.gz --strip-components=1
+        rm repo.tar.gz
+    fi
+    
+    # Execute the downloaded script
+    echo "Executing setup..."
+    cd setup
+    exec bash setup.sh "$@"
+    exit 0
+fi
+
 # Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 

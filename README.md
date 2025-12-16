@@ -10,6 +10,17 @@ SSH into your fresh Ubuntu 22.04 EC2 instance and run:
 curl -fsSL https://raw.githubusercontent.com/Ahmadh26/ec2-bootstrap/main/setup/setup.sh | bash
 ```
 
+**Alternative** (if you prefer to review the script first):
+
+```bash
+# Clone the repository
+git clone https://github.com/Ahmadh26/ec2-bootstrap.git
+cd ec2-bootstrap/setup
+
+# Run the setup script
+bash setup.sh
+```
+
 ### Force Reinstall
 
 To reinstall components (clears completion markers):
