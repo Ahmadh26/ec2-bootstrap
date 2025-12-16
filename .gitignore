@@ -1,0 +1,52 @@
+# EC2 Bootstrap - Git Ignore
+
+# Secrets and credentials
+*.secrets.json
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+/tmp/
+
+# PM2
+.pm2/
+ecosystem.config.js
+
+# SSH keys
+*.pem
+*.key
+id_rsa
+id_ed25519
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Editor directories
+.vscode/
+.idea/
+*.sublime-*
+
+# Backup files
+*.backup
+*.bak
+*.old
+
+# Temp files
+*.tmp
+temp/
+tmp/
+
+# Node modules (if testing locally)
+node_modules/
+
+# Package manager files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
